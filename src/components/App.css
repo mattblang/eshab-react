@@ -1,0 +1,12 @@
+.App {
+}
+
+.App-nav {
+    float: left;
+    width: 29%;
+}
+
+.App-main {
+    float: right;
+    width: 70%;
+}
