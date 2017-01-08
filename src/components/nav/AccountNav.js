@@ -22,7 +22,8 @@ class AccountNav extends Component {
     render() {
         return (
             <div>
-                {this.state.accounts.map((account, i) => <div key={i}>{account}</div>)}
+                {this.state.accounts.map((account, i) =>
+                    <div key={i}>{account} <button onClick={() => this.removeAccount(account)}>Delete</button></div>)}
                 <br/>
                 <input
                     ref={(account) => {
@@ -38,6 +39,13 @@ class AccountNav extends Component {
     addAccount() {
         this.accountRef.set(this.state.accounts.concat(this.accountInput.value))
         this.accountInput.value = null
+    }
+
+    removeAccount(account) {
+        const accounts = [...this.state.accounts]
+        const position = accounts.indexOf(account)
+        accounts.splice(position, 1)
+        this.accountRef.set(accounts)
     }
 }
 
