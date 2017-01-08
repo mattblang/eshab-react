@@ -1,23 +1,20 @@
 import React, {Component} from 'react'
 import * as firebase from 'firebase'
 
-class AccountList extends Component {
+class AccountNav extends Component {
 
     constructor() {
         super()
         this.state = {
-            test: 1,
             accounts: []
         }
     }
 
     componentDidMount() {
-        const testRef = firebase.database().ref().child('test')
-
-        testRef.on('value', snapshot => {
-            console.log(snapshot)
+        this.accountRef = firebase.database().ref().child('accounts')
+        this.accountRef.on('value', snapshot => {
             this.setState({
-                test: snapshot.val()
+                accounts: snapshot.val() || []
             })
         })
     }
@@ -25,11 +22,12 @@ class AccountList extends Component {
     render() {
         return (
             <div>
-                <span>{this.state.test}</span>
                 {this.state.accounts.map((account, i) => <div key={i}>{account}</div>)}
                 <br/>
                 <input
-                    ref={(account) => {this.accountInput = account}}
+                    ref={(account) => {
+                        this.accountInput = account
+                    }}
                     type="text"
                     placeholder="Enter account"/>
                 <input onClick={() => this.addAccount()} type="button" value="Add Account"/>
@@ -38,11 +36,9 @@ class AccountList extends Component {
     }
 
     addAccount() {
-        this.setState({
-            accounts: this.state.accounts.concat(this.accountInput.value)
-        })
+        this.accountRef.set(this.state.accounts.concat(this.accountInput.value))
         this.accountInput.value = null
     }
 }
 
-export default AccountList
+export default AccountNav
