@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router'
 import * as firebase from 'firebase'
 
 class AccountNav extends Component {
@@ -11,8 +12,8 @@ class AccountNav extends Component {
     }
 
     componentDidMount() {
-        this.accountRef = firebase.database().ref().child('accounts')
-        this.accountRef.on('value', snapshot => {
+        this.accountsRef = firebase.database().ref().child('accounts')
+        this.accountsRef.on('value', snapshot => {
             this.setState({
                 accounts: snapshot.val() || []
             })
@@ -23,7 +24,11 @@ class AccountNav extends Component {
         return (
             <div>
                 {this.state.accounts.map((account, i) =>
-                    <div key={i}>{account} <button onClick={() => this.removeAccount(account)}>Delete</button></div>)}
+                    <div key={i}>
+                        <Link to={`/account/${i}`}>{account.name}</Link>
+                        <button onClick={() => this.removeAccount(account)}>Delete</button>
+                    </div>
+                )}
                 <br/>
                 <input
                     ref={(account) => {
@@ -37,7 +42,9 @@ class AccountNav extends Component {
     }
 
     addAccount() {
-        this.accountRef.set(this.state.accounts.concat(this.accountInput.value))
+        this.accountsRef.set(this.state.accounts.concat({
+            name: this.accountInput.value
+        }))
         this.accountInput.value = null
     }
 
@@ -45,7 +52,7 @@ class AccountNav extends Component {
         const accounts = [...this.state.accounts]
         const position = accounts.indexOf(account)
         accounts.splice(position, 1)
-        this.accountRef.set(accounts)
+        this.accountsRef.set(accounts)
     }
 }
 

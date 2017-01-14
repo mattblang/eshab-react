@@ -5,6 +5,7 @@ import './App.css'
 
 class App extends Component {
     render() {
+        const {main} = this.props
         return (
             <div className="App">
                 <nav className="App-nav">
@@ -13,7 +14,7 @@ class App extends Component {
                     <AccountNav/>
                 </nav>
                 <main className="App-main">
-                    <span>content</span>
+                    {main}
                 </main>
             </div>
         )

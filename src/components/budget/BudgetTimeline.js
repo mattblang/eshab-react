@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default class BudgetTimeline extends Component {
+class BudgetTimeline extends Component {
     render() {
         return (
             <div>
@@ -11,3 +11,5 @@ export default class BudgetTimeline extends Component {
         )
     }
 }
+
+export default BudgetTimeline

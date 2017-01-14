@@ -4,9 +4,11 @@
 .App-nav {
     float: left;
     width: 29%;
+    border: 1px blue solid;
 }
 
 .App-main {
     float: right;
     width: 70%;
+    border: 1px red solid;
 }

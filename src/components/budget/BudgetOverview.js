@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default class BudgetOverview extends Component {
+class BudgetOverview extends Component {
     render() {
         return (
             <div>
@@ -11,3 +11,5 @@ export default class BudgetOverview extends Component {
         )
     }
 }
+
+export default BudgetOverview
