@@ -19,6 +19,15 @@ class AccountOverview extends Component {
         })
     }
 
+    componentWillReceiveProps() {
+        this.accountRef = firebase.database().ref().child('accounts/' + this.props.params.id)
+        this.accountRef.on('value', snapshot => {
+            this.setState({
+                account: snapshot.val() || {},
+            })
+        })
+    }
+
     render() {
         return (
             <div>
