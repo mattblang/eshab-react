@@ -22,7 +22,7 @@ class AccountNav extends Component {
 
     render() {
         return (
-            <div>
+            <nav>
                 {this.state.accounts.map((account, i) =>
                     <div key={i}>
                         <Link to={`/account/${i}`}>{account.name}</Link>
@@ -37,7 +37,7 @@ class AccountNav extends Component {
                     type="text"
                     placeholder="Enter account"/>
                 <input onClick={() => this.addAccount()} type="button" value="Add Account"/>
-            </div>
+            </nav>
         )
     }
 

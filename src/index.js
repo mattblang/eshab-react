@@ -2,7 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Router, Route, hashHistory} from 'react-router'
 import App from './components/App'
-import AccountOverview from './components/account/AccountOverview'
+import AccountOverview from './components/accounts/AccountOverview'
+import BudgetOverview from './components/budget/BudgetOverview'
+import ReportsDashboard from './components/reports/ReportsDashboard'
 import * as firebase from 'firebase'
 import './index.css'
 
@@ -17,6 +19,8 @@ firebase.initializeApp({
 ReactDOM.render((
         <Router history={hashHistory}>
             <Route path="/" component={App}>
+                <Route path="budget" components={{main: BudgetOverview}} />
+                <Route path="reports" components={{main: ReportsDashboard}} />
                 <Route path="account/:id" components={{main: AccountOverview}} />
             </Route>
         </Router>

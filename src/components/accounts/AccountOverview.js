@@ -33,7 +33,7 @@ class AccountOverview extends Component {
             <div>
                 {this.state.account.transactions && this.state.account.transactions.map((transaction, i) =>
                     <div key={i}>
-                        <div>{transaction.payee}</div>
+                        <span>{transaction.payee}</span>
                         <button onClick={() => this.removeTransaction(transaction)}>Delete</button>
                     </div>
                 )}

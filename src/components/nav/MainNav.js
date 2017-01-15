@@ -1,13 +1,18 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router'
 
 class MainNav extends Component {
     render() {
         return (
-            <div className="Nav">
-                <div>Budget</div>
-                <div>Reports</div>
-                <div>All Accounts</div>
-            </div>
+            <nav>
+                <div>
+                    <Link to={`/budget`}>Budget</Link>
+                </div>
+                <div>
+                    <Link to={`/reports`}>Reports</Link>
+                </div>
+                {/*<Link to={`/accounts/`}>All Accounts</Link>*/}
+            </nav>
         )
     }
 }
