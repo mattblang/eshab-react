@@ -1,16 +1,52 @@
+// @flow
+
 import React, {Component} from 'react'
+import Account from '../models/Account'
+import Transaction from '../models/Transaction'
 import * as firebase from 'firebase'
 
-class AccountOverview extends Component {
+type Props = {
+    params: {
+        id: any
+    }
+}
 
-    constructor() {
-        super()
+type State = {
+    account: Account
+}
+
+class AccountOverview extends Component {
+    static propTypes = {
+        params: {
+            id: React.PropTypes.string.isRequired
+        }
+    }
+
+    static defaultProps = {
+        params: {
+            id: null
+        }
+    }
+
+    props: Props
+    state: State
+
+    accountRef = {}
+    payeeInput = {}
+    categoryInput = {}
+    memoInput = {}
+    outflowInput = {}
+    inflowInput = {}
+
+    constructor(props: Props) {
+        super(props)
         this.state = {
-            account: {}
+            account: new Account()
         }
     }
 
     componentDidMount() {
+        this.props.params.id = 5
         this.accountRef = firebase.database().ref().child('accounts/' + this.props.params.id)
         this.accountRef.on('value', snapshot => {
             this.setState({
@@ -76,7 +112,7 @@ class AccountOverview extends Component {
     }
 
     addTransaction() {
-        const transactions = this.state.account.transactions || []
+        const transactions: Transaction[] = this.state.account.transactions || []
         const transaction = {
             payee: this.payeeInput.value,
             category: this.categoryInput.value,
@@ -96,7 +132,7 @@ class AccountOverview extends Component {
         this.inflowInput.value = null
     }
 
-    removeTransaction(transaction) {
+    removeTransaction(transaction: Transaction) {
         const transactions = [...this.state.account.transactions]
         const position = transactions.indexOf(transaction)
         transactions.splice(position, 1)

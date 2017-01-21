@@ -1,3 +1,5 @@
+// @flow
+
 import React, {Component} from 'react'
 import MainNav from './nav/MainNav'
 import AccountNav from './nav/AccountNav'
