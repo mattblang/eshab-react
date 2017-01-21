@@ -16,11 +16,7 @@ type State = {
 }
 
 class AccountOverview extends Component {
-    static propTypes = {
-        params: {
-            id: React.PropTypes.string.isRequired
-        }
-    }
+    static propTypes = {}
 
     static defaultProps = {
         params: {
@@ -46,7 +42,6 @@ class AccountOverview extends Component {
     }
 
     componentDidMount() {
-        this.props.params.id = 5
         this.accountRef = firebase.database().ref().child('accounts/' + this.props.params.id)
         this.accountRef.on('value', snapshot => {
             this.setState({
