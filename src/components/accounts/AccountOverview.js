@@ -1,32 +1,26 @@
 // @flow
 
 import React, {Component} from 'react'
+import TransactionSearch from './TransactionSearch'
 import Account from '../models/Account'
 import Transaction from '../models/Transaction'
 import * as firebase from 'firebase'
 
-type Props = {
+type AccountOverviewProps = {
     params: {
         id: any
     }
 }
-
-type State = {
+type AccountOverviewState = {
     account: Account
 }
 
 class AccountOverview extends Component {
     static propTypes = {}
+    static defaultProps = {}
 
-    static defaultProps = {
-        params: {
-            id: null
-        }
-    }
-
-    props: Props
-    state: State
-
+    props: AccountOverviewProps
+    state: AccountOverviewState
     accountRef = {}
     payeeInput = {}
     categoryInput = {}
@@ -34,7 +28,7 @@ class AccountOverview extends Component {
     outflowInput = {}
     inflowInput = {}
 
-    constructor(props: Props) {
+    constructor(props: AccountOverviewProps) {
         super(props)
         this.state = {
             account: new Account()
@@ -62,12 +56,16 @@ class AccountOverview extends Component {
     render() {
         return (
             <div>
+                <TransactionSearch search={this.searchTransactions} />
+                <br/>
+
                 {this.state.account.transactions && this.state.account.transactions.map((transaction, i) =>
                     <div key={i}>
                         <span>{transaction.payee}</span>
                         <button onClick={() => this.removeTransaction(transaction)}>Delete</button>
                     </div>
                 )}
+
                 <br/>
                 <input
                     ref={(payee) => {
@@ -128,12 +126,17 @@ class AccountOverview extends Component {
     }
 
     removeTransaction(transaction: Transaction) {
-        const transactions = [...this.state.account.transactions]
+        const transactions = [...this.state.account.transactions] // goo.gl/dxlVcD
         const position = transactions.indexOf(transaction)
         transactions.splice(position, 1)
         this.accountRef.update({
             transactions:transactions
         })
+    }
+
+    searchTransactions(query: string) {
+        window.alert(`Searched ${query}`);
+        console.log(query);
     }
 }
 
