@@ -35,20 +35,11 @@ class AccountOverview extends Component {
         }
     }
 
-    componentDidMount() {
-        this.accountRef = firebase.database().ref().child('accounts/' + this.props.params.id)
-        this.accountRef.on('value', snapshot => {
-            this.setState({
-                account: snapshot.val() || {},
-            })
-        })
-    }
-
     componentWillReceiveProps() {
-        this.accountRef = firebase.database().ref().child('accounts/' + this.props.params.id)
+        this.accountRef = firebase.database().ref('accounts/' + this.props.params.id)
         this.accountRef.on('value', snapshot => {
             this.setState({
-                account: snapshot.val() || {},
+                account: Account.parseFirebase(snapshot.val(), this.props.params.id)
             })
         })
     }
@@ -57,6 +48,8 @@ class AccountOverview extends Component {
         return (
             <div>
                 <TransactionSearch search={this.searchTransactions} />
+
+                {/*FIXME*/}
                 <br/>
 
                 {this.state.account.transactions && this.state.account.transactions.map((transaction, i) =>
@@ -105,7 +98,6 @@ class AccountOverview extends Component {
     }
 
     addTransaction() {
-        const transactions: Transaction[] = this.state.account.transactions || []
         const transaction = {
             payee: this.payeeInput.value,
             category: this.categoryInput.value,
@@ -114,9 +106,7 @@ class AccountOverview extends Component {
             inflow: this.inflowInput.value
         }
 
-        this.accountRef.update({
-            transactions: transactions.concat(transaction)
-        })
+        this.accountRef.child('transactions').push(transaction)
 
         this.payeeInput.value = null
         this.categoryInput.value = null
@@ -126,12 +116,8 @@ class AccountOverview extends Component {
     }
 
     removeTransaction(transaction: Transaction) {
-        const transactions = [...this.state.account.transactions] // goo.gl/dxlVcD
-        const position = transactions.indexOf(transaction)
-        transactions.splice(position, 1)
-        this.accountRef.update({
-            transactions:transactions
-        })
+        console.log(transaction.id)
+        this.accountRef.child('transactions').child(transaction.id).remove()
     }
 
     searchTransactions(query: string) {

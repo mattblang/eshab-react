@@ -30,12 +30,10 @@ class AccountNav extends Component {
     componentDidMount() {
         this.accountsRef = firebase.database().ref('accounts')
         this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', snapshot => {
-            const val = snapshot.val() || {};
+            const val = snapshot.val() || {}
             this.setState({
                 accounts: Object.keys(val).map((key) => {
-                    const account = val[key]
-                    account.id = key;
-                    return account;
+                    return Account.parseFirebase(val[key], key)
                 })
             })
         })
@@ -44,10 +42,10 @@ class AccountNav extends Component {
     render() {
         return (
             <nav className="AccountNav">
-                <strong>{this.getLabel()}</strong>
+                <div><strong>{this.getLabel()}</strong></div>
                 {this.state.accounts.map((account, i) =>
                     <div key={i}>
-                        <Link to={`/account/${i}`}>{account.name}</Link>
+                        <Link to={`/account/${account.id}`}>{account.name}</Link>
                         <button onClick={() => this.removeAccount(account)}>Delete</button>
                     </div>
                 )}
