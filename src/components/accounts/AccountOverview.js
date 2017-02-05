@@ -135,8 +135,8 @@ class AccountOverview extends Component {
     }
 
     searchTransactions(query: string) {
-        window.alert(`Searched ${query}`);
-        console.log(query);
+        window.alert(`Searched ${query}`)
+        console.log(query)
     }
 }
 

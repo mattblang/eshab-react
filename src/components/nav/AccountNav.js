@@ -1,35 +1,52 @@
+// @flow
+
 import React, {Component} from 'react'
 import {Link} from 'react-router'
 import * as firebase from 'firebase'
+import Account from '../models/Account'
+import AccountType from '../models/AccountType'
+
+type AccountNavProps = {
+    type: number
+}
+type AccountNavState = {
+    accounts: Array<Account>
+}
 
 class AccountNav extends Component {
 
-    constructor() {
-        super()
+    props: AccountNavProps
+    state: AccountNavState
+    accountsRef = {}
+    accountInput = {}
+
+    constructor(props: AccountNavProps) {
+        super(props)
         this.state = {
             accounts: []
         }
     }
 
     componentDidMount() {
-        this.accountsRef = firebase.database().ref().child('accounts')
-        this.accountsRef.on('value', snapshot => {
+        this.accountsRef = firebase.database().ref('accounts')
+        this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', snapshot => {
+            const val = snapshot.val() || {};
             this.setState({
-                accounts: snapshot.val() || []
+                accounts: Object.keys(val).map(key => val[key])
             })
         })
     }
 
     render() {
         return (
-            <nav>
+            <nav className="AccountNav">
+                <strong>{this.getLabel()}</strong>
                 {this.state.accounts.map((account, i) =>
                     <div key={i}>
                         <Link to={`/account/${i}`}>{account.name}</Link>
                         <button onClick={() => this.removeAccount(account)}>Delete</button>
                     </div>
                 )}
-                <br/>
                 <input
                     ref={(account) => {
                         this.accountInput = account
@@ -41,14 +58,29 @@ class AccountNav extends Component {
         )
     }
 
+    getLabel() {
+        switch (this.props.type) {
+            case AccountType.BUDGET:
+                return 'Budget Accounts'
+            case AccountType.OFF_BUDGET:
+                return 'Off-Budget Accounts'
+            case AccountType.CLOSED:
+                return 'Closed Accounts'
+            default:
+                return null
+        }
+
+    }
+
     addAccount() {
-        this.accountsRef.set(this.state.accounts.concat({
-            name: this.accountInput.value
-        }))
+        this.accountsRef.push({
+            name: this.accountInput.value,
+            type: this.props.type
+        })
         this.accountInput.value = null
     }
 
-    removeAccount(account) {
+    removeAccount(account: Account) {
         const accounts = [...this.state.accounts]
         const position = accounts.indexOf(account)
         accounts.splice(position, 1)

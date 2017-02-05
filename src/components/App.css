@@ -1,14 +1,19 @@
 .App {
 }
 
-.App-nav {
+.App main {
+    float: right;
+    width: 70%;
+    border: 1px red solid;
+}
+
+.AppNav {
     float: left;
     width: 29%;
     border: 1px blue solid;
 }
 
-.App-main {
-    float: right;
-    width: 70%;
-    border: 1px red solid;
+.AppNav .AccountNav {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

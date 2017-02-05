@@ -3,6 +3,7 @@
 import React, {Component} from 'react'
 import MainNav from './nav/MainNav'
 import AccountNav from './nav/AccountNav'
+import AccountType from './models/AccountType'
 import './App.css'
 
 class App extends Component {
@@ -11,12 +12,13 @@ class App extends Component {
 
         return (
             <div className="App">
-                <nav className="App-nav">
+                <nav className="AppNav">
                     <MainNav/>
-                    <br/>
-                    <AccountNav/>
+                    <AccountNav type={AccountType.BUDGET} />
+                    <AccountNav type={AccountType.OFF_BUDGET} />
+                    <AccountNav type={AccountType.CLOSED} />
                 </nav>
-                <main className="App-main">
+                <main>
                     {main}
                 </main>
             </div>
