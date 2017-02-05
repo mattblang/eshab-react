@@ -32,7 +32,11 @@ class AccountNav extends Component {
         this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', snapshot => {
             const val = snapshot.val() || {};
             this.setState({
-                accounts: Object.keys(val).map(key => val[key])
+                accounts: Object.keys(val).map((key) => {
+                    const account = val[key]
+                    account.id = key;
+                    return account;
+                })
             })
         })
     }
@@ -81,10 +85,7 @@ class AccountNav extends Component {
     }
 
     removeAccount(account: Account) {
-        const accounts = [...this.state.accounts]
-        const position = accounts.indexOf(account)
-        accounts.splice(position, 1)
-        this.accountsRef.set(accounts)
+        this.accountsRef.child(account.id).remove()
     }
 }
 
