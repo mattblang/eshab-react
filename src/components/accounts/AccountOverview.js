@@ -116,7 +116,6 @@ class AccountOverview extends Component {
     }
 
     removeTransaction(transaction: Transaction) {
-        console.log(transaction.id)
         this.accountRef.child('transactions').child(transaction.id).remove()
     }
 

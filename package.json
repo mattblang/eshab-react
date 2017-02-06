@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "flow-bin": "0.37.4",
-    "react-scripts": "0.8.4"
+    "react-scripts": "0.8.5",
+    "react-test-renderer": "^15.4.2"
   },
   "dependencies": {
     "firebase": "3.6.4",
