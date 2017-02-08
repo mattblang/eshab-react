@@ -28,20 +28,20 @@ class AccountNav extends Component {
     }
 
     componentDidMount() {
-        this.accountsRef = firebase.database().ref('accounts')
-        this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', snapshot => {
-            const val = snapshot.val() || {}
-            this.setState({
-                accounts: Object.keys(val).map((key) => {
-                    return Account.parseFirebase(val[key], key)
-                })
-            })
-        })
+        // this.accountsRef = firebase.database().ref('accounts')
+        // this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', snapshot => {
+        //     const val = snapshot.val() || {}
+        //     this.setState({
+        //         accounts: Object.keys(val).map((key) => {
+        //             return Account.parseFirebase(val[key], key)
+        //         })
+        //     })
+        // })
     }
 
     render() {
         return (
-            <nav className="AccountNav">
+            <nav style={styles.container}>
                 <div><strong>{this.getLabel()}</strong></div>
                 {this.state.accounts.map((account, i) =>
                     <div key={i}>
@@ -84,6 +84,13 @@ class AccountNav extends Component {
 
     removeAccount(account: Account) {
         this.accountsRef.child(account.id).remove()
+    }
+}
+
+let styles = {
+    container: {
+        backgroundColor: 'blue',
+        color: 'red'
     }
 }
 
