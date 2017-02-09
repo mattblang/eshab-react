@@ -13,6 +13,12 @@ type AccountNavState = {
     accounts: Array<Account>
 }
 
+let styles = {
+    container: {
+        color: 'green'
+    }
+}
+
 class AccountNav extends Component {
 
     props: AccountNavProps
@@ -52,10 +58,12 @@ class AccountNav extends Component {
         )
     }
 
-    // FIXME: Find a mock for Firebase so I don't have to do this
+    // FIXME: Find a good way to mock Firebase so I don't have to do this
     setupFirebase() {
         this.accountsRef = firebase.database().ref('accounts')
-        this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', this.processAccountsSnapshot)
+        this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', snapshot => {
+            this.processAccountsSnapshot(snapshot)
+        })
     }
 
     processAccountsSnapshot(snapshot) {
@@ -91,13 +99,6 @@ class AccountNav extends Component {
 
     removeAccount(account: Account) {
         this.accountsRef.child(account.id).remove()
-    }
-}
-
-let styles = {
-    container: {
-        backgroundColor: 'blue',
-        color: 'red'
     }
 }
 

@@ -4,10 +4,10 @@
   "private": true,
   "devDependencies": {
     "enzyme": "2.7.1",
+    "enzyme-to-json": "1.4.5",
     "flow-bin": "0.37.4",
-    "react-scripts": "0.8.5",
-    "react-test-renderer": "15.4.2",
-    "react-addons-test-utils": "15.4.2"
+    "react-addons-test-utils": "15.4.2",
+    "react-scripts": "0.8.5"
   },
   "dependencies": {
     "firebase": "3.6.4",
@@ -22,5 +22,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "flow": "flow"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/enzyme-to-json/serializer"
+    ]
   }
 }

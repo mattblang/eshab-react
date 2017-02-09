@@ -1,20 +1,19 @@
 // @flow
 
 import React from 'react'
-import renderer from 'react-test-renderer'
 import {shallow} from 'enzyme'
+import toJson from 'enzyme-to-json';
 import AccountNav from './AccountNav'
 import AccountType from '../models/AccountType'
 
 it('renders correctly', () => {
-    const component = renderer.create(
+    const component = shallow(
         <AccountNav type={AccountType.BUDGET} />
     )
-
-    expect(component.toJSON()).toMatchSnapshot()
+    expect(toJson(component)).toMatchSnapshot()
 })
 
-it('displays appropriate text', () => {
+it('displays appropriate title', () => {
     const component = shallow(
         <AccountNav type={AccountType.BUDGET} />
     )

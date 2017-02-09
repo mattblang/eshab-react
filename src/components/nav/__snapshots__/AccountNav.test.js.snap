@@ -2,8 +2,7 @@ exports[`test renders correctly 1`] = `
 <nav
   style={
     Object {
-      "backgroundColor": "blue",
-      "color": "red",
+      "color": "green",
     }
   }>
   <div>
