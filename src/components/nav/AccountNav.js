@@ -28,15 +28,7 @@ class AccountNav extends Component {
     }
 
     componentDidMount() {
-        // this.accountsRef = firebase.database().ref('accounts')
-        // this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', snapshot => {
-        //     const val = snapshot.val() || {}
-        //     this.setState({
-        //         accounts: Object.keys(val).map((key) => {
-        //             return Account.parseFirebase(val[key], key)
-        //         })
-        //     })
-        // })
+        //this.setupFirebase()
     }
 
     render() {
@@ -58,6 +50,21 @@ class AccountNav extends Component {
                 <input onClick={() => this.addAccount()} type="button" value="Add Account"/>
             </nav>
         )
+    }
+
+    // FIXME: Find a mock for Firebase so I don't have to do this
+    setupFirebase() {
+        this.accountsRef = firebase.database().ref('accounts')
+        this.accountsRef.orderByChild('type').equalTo(this.props.type).on('value', this.processAccountsSnapshot)
+    }
+
+    processAccountsSnapshot(snapshot) {
+        const val = snapshot.val() || {}
+        this.setState({
+            accounts: Object.keys(val).map((key) => {
+                return Account.parseFirebase(val[key], key)
+            })
+        })
     }
 
     getLabel() {
