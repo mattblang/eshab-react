@@ -4,8 +4,6 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import AccountNav from './AccountNav'
 import AccountType from '../models/AccountType'
-import Account from '../models/Account'
-import * as firebase from 'firebase'
 
 jest.mock('firebase', () => {
     return {

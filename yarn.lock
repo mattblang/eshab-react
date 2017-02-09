@@ -4330,7 +4330,7 @@ react-scripts@0.8.5:
   optionalDependencies:
     fsevents "1.0.14"
 
-react-test-renderer@^15.4.2:
+react-test-renderer@15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.4.2.tgz#27e1dff5d26d0e830f99614c487622bc831416f3"
   dependencies:
