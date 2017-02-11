@@ -13,7 +13,7 @@
     border: 1px blue solid;
 }
 
-.AppNav .AccountNav {
+.AppNav > * {
     margin-top: 15px;
     margin-bottom: 15px;
 }

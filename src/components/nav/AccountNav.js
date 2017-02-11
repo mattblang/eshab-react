@@ -12,6 +12,9 @@ type AccountNavProps = {
 type AccountNavState = {
     accounts: Array<Account>
 }
+type AccountsSnapshot = {
+    val: Function
+}
 
 let styles = {
     container: {
@@ -34,7 +37,7 @@ class AccountNav extends Component {
     }
 
     componentDidMount() {
-        //this.setupFirebase()
+        this.setupFirebase()
     }
 
     render() {
@@ -66,7 +69,7 @@ class AccountNav extends Component {
         })
     }
 
-    processAccountsSnapshot(snapshot) {
+    processAccountsSnapshot(snapshot: AccountsSnapshot) {
         const val = snapshot.val() || {}
         this.setState({
             accounts: Object.keys(val).map((key) => {
